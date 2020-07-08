@@ -1,7 +1,7 @@
 from flask import Flask
 from flask_restful import Api
 from flask_jwt import JWT
-from db import db
+
 #since we are using falsk_restful we no longer need jsonify while returning stuffs.
 from security import authenticate, identity
 from resources.user import UserResgister
@@ -16,9 +16,6 @@ app.config['PROPAGATE_EXEPTIONS'] = True
 api = Api(app)
 app.secret_key = 'Kane'
 
-@app.before_first_request
-def create_tables():
-    db.create_all()
 
 jwt = JWT(app, authenticate, identity)
 
@@ -29,5 +26,6 @@ api.add_resource(StoreList, '/stores')
 api.add_resource(UserResgister, '/register')
 
 if __name__ == '__main__':
+    from db import db
     db.init_app(app)
     app.run(port=5000, debug=True) # this debug TRUE will give us a detailed HTML page whenever the error occurs in the application
