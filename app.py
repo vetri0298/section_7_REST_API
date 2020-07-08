@@ -1,5 +1,5 @@
-from flask import Flask, request
-from flask_restful import Resource, Api
+from flask import Flask
+from flask_restful import Api
 from flask_jwt import JWT
 #since we are using falsk_restful we no longer need jsonify while returning stuffs.
 from security import authenticate, identity
@@ -11,6 +11,7 @@ from resources.store import Store, StoreList
 app = Flask(__name__)
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///data.db'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
+app.config['PROPAGATE_EXEPTIONS'] = True
 api = Api(app)
 app.secret_key = 'Kane'
 
